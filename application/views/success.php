@@ -2,11 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<title>Envía CV</title>
  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+<script src="///netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
 
+<title>Enviar CV</title>
 
 
 <style type="text/css">
@@ -196,7 +195,7 @@
 						<table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="MobileScale2">
 							<tr>
 								 <td width="100%" valign="top">
-									<img src="images/header-top.jpg" width="600" alt="" border="0" class="ImageResize20" style="display: block;" />
+									<img src="/images/header-top.jpg" width="600" alt="" border="0" class="ImageResize20" style="display: block;" />
 								</td>
 							</tr>
 						</table>
@@ -232,27 +231,27 @@
 										<tr>
 											<td>
 												<a href="#"  style="text-decoration: none;">
-													<img src="images/social-facebook.jpg" width="27" height="25" border="0" alt="Facebook" style="display:block; border:none; outline:none; text-decoration:none;" />
+													<img src="/images/social-facebook.jpg" width="27" height="25" border="0" alt="Facebook" style="display:block; border:none; outline:none; text-decoration:none;" />
 												</a>
 											</td>										
 											<td>
 												<a href="#"  style="text-decoration: none;">
-													<img src="images/social-twitter.jpg" width="27" height="25" border="0" alt="Twitter" style="display:block; border:none; outline:none; text-decoration:none;" />
+													<img src="/images/social-twitter.jpg" width="27" height="25" border="0" alt="Twitter" style="display:block; border:none; outline:none; text-decoration:none;" />
 												</a>
 											</td>
 											<td>
 												<a href="#"  style="text-decoration: none;">
-													<img src="images/social-google.jpg" width="27" height="25" border="0" alt="Google" style="display:block; border:none; outline:none; text-decoration:none;" />
+													<img src="/images/social-google.jpg" width="27" height="25" border="0" alt="Google" style="display:block; border:none; outline:none; text-decoration:none;" />
 												</a>
 											</td>
 											<td>
 												<a href="#"  style="text-decoration: none;">
-													<img src="images/social-skype.jpg" width="27" height="25" border="0" alt="Skype" style="display:block; border:none; outline:none; text-decoration:none;" />
+													<img src="/images/social-skype.jpg" width="27" height="25" border="0" alt="Skype" style="display:block; border:none; outline:none; text-decoration:none;" />
 												</a>
 											</td>
 											<td>
 												<a href="#"  style="text-decoration: none;">
-													<img src="images/social-vimeo.jpg" width="27" height="25" border="0" alt="Vimeo" style="display:block; border:none; outline:none; text-decoration:none;" />
+													<img src="/images/social-vimeo.jpg" width="27" height="25" border="0" alt="Vimeo" style="display:block; border:none; outline:none; text-decoration:none;" />
 												</a>
 											</td>
 										</tr>													
@@ -283,7 +282,7 @@
 										<tr>
 										  <td width="100%" align="center" valign="top">
 												<a href="#"  style="text-decoration: none; color: #565656;">
-													<img src="images/dotted-header.jpg" width="560" align="middle" alt="" border="0" class="ImageResize30" style="display: block; border-radius: 0px;" />																											
+													<img src="/images/dotted-header.jpg" width="560" align="middle" alt="" border="0" class="ImageResize30" style="display: block; border-radius: 0px;" />																											
 												</a>
 											</td>
 										</tr>
@@ -313,6 +312,9 @@
 									<table border="0" cellpadding="0" cellspacing="0" align="left" class="HeaderModule">
 										<tr>
 											<td>
+
+
+
 											</td>
 										</tr>
 									</table>
@@ -365,7 +367,7 @@
 								<td height="30" bgcolor="#f8f8f8" style="font-size: 12px; color: #353535; font-weight: bold; text-align: center; font-family: Helvetica, Arial, sans-serif; vertical-align: bottom;" class="HeaderModule">	
 														
 									<!-- Header links -->
-								
+									
 									
 									<!-- End of Header links -->
 															
@@ -389,7 +391,7 @@
 						<table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="MobileScale2">
 							<tr>
 								 <td width="100%" valign="top">
-									<img src="images/header-bottom.jpg" width="600" alt="" border="0" class="ImageResize37" style="display: block;" />
+									<img src="/images/header-bottom.jpg" width="600" alt="" border="0" class="ImageResize37" style="display: block;" />
 								</td>
 							</tr>
 						</table>
@@ -431,7 +433,7 @@
 							<tr>
 								<td width="100%" style="font-size: 18px; color: #353535; text-align: center; font-weight: normal; font-family: Helvetica, Arial, sans-serif; line-height: 24px;">
 									<a href="#"  style="text-decoration: none; color: #353535;">
-										Estimado(a) <?=$data['name']?>, seleccione su  <span style="color: #0cbb98;">área profesional</span> y a cuántos <span style="color: #0cbb98;">profesionales de reclutamiento</span> desea enviar su  <span style="color: #0cbb98;">currículum</span>
+										Su  <span style="color: #0cbb98;">curr&iacute;culum</span> ha sido enviado.
 									</a>
 								</td>
 							</tr>
@@ -440,6 +442,17 @@
 							<tr>
 								<td width="100%">						
 
+									<!-- Image Section -->
+									<table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="MobileScale2">
+										<tr>
+										  <td width="100%" align="center" valign="top">
+												<a href="#"  style="text-decoration: none; color: #565656;">
+													<img src="/images/image-promo.jpg" width="560" align="middle" alt="Image-Promo" border="0" class="ImageResize560" style="display: block; border-radius: 0px;" />																											
+												</a>
+											</td>
+										</tr>
+									</table>
+									<!-- End of Image Section -->
 									
 								</td>
 							</tr>
@@ -467,33 +480,7 @@
 									<table border="0" cellpadding="0" cellspacing="0" align="center">
 										<tr><td width="100%" height="10"></td></tr>
 										<tr>
-											<td width="100%" style="font-size: 12px; color: #565656; text-align: left; font-weight: normal; font-family: Helvetica, Arial, sans-serif; line-height: 20px;">	
-											<form id="form" action="?/welcome/envia2" method="post" enctype="multipart/form-data">
-											<fieldset>									
-											<label for="cat">Seleccione un rubro de empleo</label><br />
-											<select id="cat" name="cat" class="form-control">
-<? 
-foreach($cat as $c){
- ?>
-	<option value="<?=$c['id']?>"><?=$c['cat']?>(<?=$c['c']?>)</option>
-<?
-}
-?>
-											</select>
-											
-											<br />
-											<p>
-										</p>	
-											</fieldset>
-											</form>
-											<script>
-											function enviar(){
-											$("#form").submit();
-											}
-											</script>	
-												
-												
-												
+											<td width="100%" style="font-size: 12px; color: #565656; text-align: center; font-weight: normal; font-family: Helvetica, Arial, sans-serif; line-height: 20px;">										
 											</td>
 										</tr>
 										<tr><td width="100%" height="15"></td></tr>
@@ -504,8 +491,7 @@ foreach($cat as $c){
 													<!-- Button -->
 													<tr>															
 														<td>
-															<a href="#"  style="text-decoration: none;">
-																<img onclick="enviar();" src="images/button-download.jpg" width="111" align="middle" alt="Button" border="0" style="display: block;" />																											
+															<a href="?/welcome/" class="btn btn-primary"  style="text-decoration: none;">Continuar
 															</a>
 														</td>	
 													</tr>													

@@ -148,19 +148,19 @@ class paypal_class {
       // is redirected to paypal.
 
       echo "<html>\n";
-      echo "<head><title>Processing Payment...</title></head>\n";
+      echo "<head><title>Procesando pago...</title></head>\n";
       echo "<body onLoad=\"document.forms['paypal_form'].submit();\">\n";
-      echo "<center><h2>Please wait, your order is being processed and you";
-      echo " will be redirected to the paypal website.</h2></center>\n";
+      echo "<center><h2>Espere, su orden esta siendo procesada";
+      echo "</h2></center>\n";
       echo "<form method=\"post\" name=\"paypal_form\" ";
       echo "action=\"".$this->paypal_url."\">\n";
 
       foreach ($this->fields as $name => $value) {
          echo "<input type=\"hidden\" name=\"$name\" value=\"$value\"/>\n";
       }
-      echo "<center><br/><br/>If you are not automatically redirected to ";
-      echo "paypal within 5 seconds...<br/><br/>\n";
-      echo "<input type=\"submit\" value=\"Click Here\"></center>\n";
+      echo "<center><br/><br/>Si no es redireccionado en 5 segundos";
+      echo "haga click...<br/><br/>\n";
+      echo "<input type=\"submit\" value=\"Paypal\"></center>\n";
       
       echo "</form>\n";
       echo "</body></html>\n";

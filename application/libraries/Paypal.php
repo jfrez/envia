@@ -1,7 +1,3 @@
-/*
- *  application/library/paypal.php
- *  @license   http://www.opensource.org/licenses/mit-license.php
- */
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
  
 class Paypal {
@@ -56,13 +52,13 @@ class Paypal {
     function paypal_auto_form() {
         $output = '';
         $output .= '<html>' . "\n";
-        $output .= '<head><title>Processing Payment...</title></head>' . "\n";
+        $output .= '<head><title>Procesando pago...</title></head>' . "\n";
         $output .= '<body onLoad="document.forms[\'paypal_auto_form\'].submit();">' . "\n";
-        $output .= '<p>Please wait, your order is being processed and you will be redirected to the paypal website.</p>' . "\n";
+        $output .= '<p>Espere, esta siendo redirigido al sitio de pago.</p>' . "\n";
         $output .= '<form method="post" action="'.$this->paypal_url.'" name="paypal_auto_form"/>' . "\n";
         foreach ($this->fields as $name => $value)
             $output .= form_hidden($name, $value) . "\n";
-        $output .= '<p>'. form_submit('pp_submit', 'Click here if you\'re not automatically redirected...') . '</p>';
+        $output .= '<p>'. form_submit('pp_submit', 'Click aqui si no es redirigido...') . '</p>';
         $output .= form_close() . "\n";
         $output .= '</body></html>';
         echo $output;
@@ -90,8 +86,15 @@ class Paypal {
             }
             $req .= "&$key=$value";
         }
- 
-        $ch = curl_init($this->paypal_url);
+        if($myPost['payment_status']=='Completed'){
+
+	log_message('debug',"PAYMENT OK"); 
+
+        $this->ipn_data = $_POST;
+            return $this->log_ipn_results(true);
+	}
+
+	$ch = curl_init($this->paypal_url);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -106,9 +109,7 @@ class Paypal {
             exit;
         }
         curl_close($ch);
- 
         $this->ipn_data = $_POST;
- 
         if (strcmp ($res, "VERIFIED") == 0) {
             return $this->log_ipn_results(true);
         } else if (strcmp ($res, "INVALID") == 0) {

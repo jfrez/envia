@@ -58,21 +58,23 @@ class Welcome extends CI_Controller {
 		$config['upload_path'] = './uploads/';
 		$config['allowed_types'] = 'doc|docx|pdf';
 		$config['max_size']	= '8000';
-	
+		$config['overwrite'] = false;	
 
 		$this->load->library('upload', $config);
 
 		if ( ! $this->upload->do_upload('cv'))
 		{
 			$error = array('error' => $this->upload->display_errors());
-		
+			print_r($error);
 		}
 		else
 		{
 			$data = array('upload_data' => $this->upload->data());
 
 		}
+		
  	$udata=	$this->upload->data();
+            $query = $this->db->query("SELECT cat.id,cat.cat, count(cat.cat) as c FROM hunters,cat WHERE hunters.cat = cat.id group by cat.cat");
 $data = array(
 				'name' =>$this->input->post('nombre'),
 				'email' =>$this->input->post('email'),
@@ -85,15 +87,32 @@ $data = array(
 	$cv= $this->db->insert_id();
 		
 	$this->session->set_userdata(array('cv'=>$data, 'id' =>$cv));
-		$this->load->view('envia',$data);
+		$this->load->view('envia',array('data'=>$data,'cat' =>$query->result_array()));
 	}
+
+ public function envia2()
+        {
+                $this->load->database();
+                $this->load->driver('session');
+            $query = $this->db->query("SELECT cat.id,cat.cat, count(cat.cat) as c FROM hunters,cat WHERE hunters.cat = cat.id and cat.id = ".$this->input->post('cat')." group by cat.cat");
+ $data = array(
+                                'cat' =>$this->input->post('cat')
+                                );
+     $cv = $this->session->userdata('cv');
+        $id = $this->session->userdata('id');
+        $this->db->where('id', $id);
+        $this->db->update('cv', $data);
+
+                $this->load->view('envia2',array('data'=>$data,'cat' =>$query->result_array()));
+        }
+
+
 	public function pagar()
 	{
 			$this->load->database();
 			$this->load->driver('session');
 
 	$data = array(
-				'cat' =>$this->input->post('cat'),
 				'cant' =>$this->input->post('Profesionales')
 				);
 				
@@ -112,31 +131,13 @@ $data = array(
 	$this->load->driver('session');
 	$id = $this->session->userdata('id');
 	$where = $this->session->userdata('where');
-
 	$this->load->library( 'Paypal' );
         $this->paypal->initialize();
- 
-        $this->paypal->add_field( 'return', site_url( 'welcome/success' ) );
-        $this->paypal->add_field( 'cancel_return', site_url( 'welcome/cancel' ) );
+        $this->paypal->add_field( 'return', site_url( '/welcome/success' ) );
+        $this->paypal->add_field( 'cancel_return', site_url( '/welcome/cancel' ) );
         $this->paypal->add_field( 'notify_url', site_url( 'welcome/ipn/'.$id ) );
- 
-	$id = $this->session->userdata('id');
-	if($where['cant']==10){
-		$name= "10 envios";
-		$p=20;
-	}	
-	if($where['cant']==20){
-		$name ="20 envios";
-		$p=35;
-	}	
-	if($where['cant']==50){
-		$name ="50 envios";
-		$p=70;
-	}	
-	if($where['cant']==100){
-		$name ="100 envios";
-		$p=100;
-	}	
+		$name= $where['cant']." envios";
+		$p=$where['cant'];
         $this->paypal->add_field( 'item_name', $name);
         $this->paypal->add_field( 'custom', $id);
         $this->paypal->add_field( 'amount', $p );
@@ -145,8 +146,7 @@ $data = array(
         $this->paypal->paypal_auto_form();
     }	
    public function ipn($id) {
-	$this->load->database();
-	$this->load->library('email');
+$this->load->database();
         $this->load->library( 'Paypal' );
         if ( $this->paypal->validate_ipn() ) {
             $pdata = $this->paypal->ipn_data;
@@ -154,45 +154,84 @@ $data = array(
                 if($pdata['payment_status'] == "Completed"){
                     if($pdata['business'] == $this->config->item( 'paypal_email' )) {
                         //handle payment...
-						
-						$cv = $this->db->get_where('cv', array('id' => $id));
-						$cv1 = $cv->row(); 
-						$query = $this->db->query("SELECT * FROM hunters ORDER BY RAND()  LIMIT ".$cv1->cant.";");
-						foreach ($query->result() as $row)
-						{
-							$to = $row->email;
-						
-							$this->email->from('cv@enviacv.cl', 'Curriculum');
-							$this->email->reply_to($cv1->email, $cv1->name);
-							$this->email->to($row->email); 
-							$this->email->bcc('jonathan.frez@gmail.com'); 
-							
-							$this->email->subject('CV '.$cv1->name);
-							
-							$msg = $cv1->inter;
-							$msg .= "<br>";
-							$msg .=$cv1->exp;
-							$this->email->attach($cv1->file);
-							$this->email->message($msg);	
-							
-							$this->email->send();
-							echo $this->email->print_debugger();
-							
-						}
-                    }
+			   $data = array(
+                                'paid' => 1
+                                );
+
+			        $this->db->where('id', $id);
+			        $this->db->update('cv', $data);
+                   		$this->send($id); 
+			}
                 }
             }
         }
     }
+	public function email(){
+ $this->load->library('email');
+  $this->email->from('cv@enviacv.cl', 'TEST');
+ $this->email->to("jonathan.frez@gmail.com");
+ $this->email->subject("TEST");
+ $this->email->message("HOLA");
+$this->email->set_newline("\r\n");
+$this->email->send();
 
-    public function success() {
+echo $this->email->print_debugger();
+
+
+	}
+public function send($id){
+	$this->load->library('email');
 	$this->load->database();
-        echo "success";
+	$this->load->driver('session');
+	if(!isset($id))
+        $id = $this->session->userdata('id');
+
+	 $cv = $this->db->get_where('cv', array('id' => $id,'paid'=>1,'sent'=>0));
+//	 $cv = $this->db->get_where('cv', array('id' => $id,'paid'=>1));
+if ($cv->num_rows() > 0)
+{
+                         $cv1 = $cv->row();
+                         $cat = $this->db->get_where('cat', array('id' => $cv1->cat));
+                                                $query = $this->db->query("SELECT * FROM hunters where cat = ".$cv1->cat." ORDER BY RAND()  LIMIT ".$cv1->cant.";");
+                                                foreach ($query->result() as $row)
+                                                {
+                                                        $to = $row->email;
+  							$this->email->from('cv@enviacv.cl', 'enviacv.cl');
+                                                //      $this->email->reply_to($cv1->email, $cv1->name);
+                                                        $this->email->to($row->email);
+                                                       // $this->email->to("jonathan.frez@gmail.com");
+                                                      //$this->email->bcc('wwsalestech@gmail.com');
+                                                        $this->email->subject('CV '.$cv1->name);
+                                                        $msg = $cv1->inter;
+                                                        $msg .=$cv1->exp;
+                                                        $this->email->attach($cv1->file);
+                                                        $this->email->message($msg);
+							$this->email->set_newline("\r\n");
+                                                        $this->email->send();
+
+                                                       echo $this->email->print_debugger();
+                                                        $this->email->clear(TRUE);
+                                                }
+	   $data = array(
+                                'sent' => 1
+                                );
+
+			        $this->db->where('id', $id);
+			        $this->db->update('cv', $data);
+                   	
+}
+
+
+
+	}
+   public function success() {
+	$this->load->database();
+		$this->load->view('success');
     }
  
     public function cancel() {
 	$this->load->database();
-        echo "canceled / failed";
+		$this->load->view('cancel');
     }	
 }
 

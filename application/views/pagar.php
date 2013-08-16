@@ -3,7 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<title>Emotion - Responsive Email Template</title>
+ <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+
+<title>Enviar CV</title>
 
 
 <style type="text/css">
@@ -479,9 +482,7 @@
 													<!-- Button -->
 													<tr>															
 														<td>
-															<a href="?/welcome/pay/<?=$id?>" class="btn btn-primary">
-															Pagar por enviar a <?=$where['cant']?> profesionales																							
-															</a>
+	<a href="?/welcome/pay/<?=$id?>" class="btn btn-primary">Pagar por enviar a <?=$where['cant']?> profesionales</a>
 														</td>	
 													</tr>													
 													<!-- End of Button -->

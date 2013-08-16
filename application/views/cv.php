@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<title>Emotion - Responsive Email Template</title>
+<title>Envia CV</title>
  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
-
+<script src="/js/jqBootstrapValidation-1.3.7.js"></script>
 
 <style type="text/css">
 
@@ -473,8 +473,29 @@
 											<input type="text" class="form-control" id="nombre" name="nombre" /><br />
 											<label for="nombre">Tus datos de contacto</label><br />
 											<table>
-											<tr><td>Email</td><td> <input class="form-control" type="email" id="email" name="email" /></td>
-											</tr><tr><td>Telefono</td><td> <input type="tel" class="form-control" id="phone" name="phone" /></td></tr></table>
+											<tr><td></td><td>
+<div class="control-group">
+    <label class="control-label">Email </label>
+    <div class="controls">
+ <input class="form-control" type="email" id="email" name="email" />
+<p class="help-block"></p>
+    </div>
+  </div>
+</td>
+
+											</tr><tr><td></td><td>
+
+<div class="control-group">
+    <label class="control-label">Tel&eacute;fono </label>
+    <div class="controls">
+ <input class="form-control" type="tel" id="phone" name="phone" />
+<p class="help-block"></p>
+    </div>
+  </div>
+</td>
+
+
+</tr></table>
 											<br />
 											<label for="intereses">Tus intereses profesionales</label>
 											<textarea rows="5" cols="80" id="intereses" class="form-control" name="intereses"></textarea>
@@ -486,7 +507,26 @@
 											</form>
 											<script>
 											function enviar(){
+											var datos=true;
+											if($("#nombre").val().length <2){
+												datos=false;
+											}if($("#email").val().length <2){
+												datos=false;
+											}if($("#intereses").val().length <2){
+												datos=false;
+											}if($("#exp").val().length <2){
+												datos=false;
+											}if($("#cv").val().length <2){
+												datos=false;
+											}
+
+
+
+											if(datos){
 											$("#form").submit();
+											}else{
+											 alert("Complete todos los datos");
+											}
 											}
 											</script>	
 												
@@ -502,9 +542,7 @@
 													<!-- Button -->
 													<tr>															
 														<td>
-															<a href="#"  style="text-decoration: none;">
-																<img onclick="enviar();" src="images/button-download.jpg" width="111" align="middle" alt="Button" border="0" style="display: block;" />																											
-															</a>
+															<a href="#"  onclick="enviar();" class="btn btn-primary" style="text-decoration: none;">Continuar</a><br>
 														</td>	
 													</tr>													
 													<!-- End of Button -->
@@ -526,6 +564,8 @@
 	</tr>
 </table>
 
-
+<script>
+  $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+</script>
 </body>
 </html>

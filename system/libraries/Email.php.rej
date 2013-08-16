@@ -1,0 +1,45 @@
+--- Email.php
++++ Email.php
+@@ -51,6 +51,7 @@
+     var $send_multipart    = TRUE;        // TRUE/FALSE - Yahoo does not like multipart alternative, so this is an override.  Set to FALSE for Yahoo.
+     var    $bcc_batch_mode    = FALSE;    // TRUE/FALSE  Turns on/off Bcc batch feature
+     var    $bcc_batch_size    = 200;      // If bcc_batch_mode = TRUE, sets max number of Bccs in each batch
++    var    $starttls          = FALSE;    // Issue STARTTLS after connection to switch to Secure SMTP over TLS (RFC 3207)
+     var $_safe_mode        = FALSE;
+     var    $_subject        = "";
+     var    $_body            = "";
+@@ -1581,7 +1582,20 @@
+             return FALSE;
+         }
+ 
+-        $this->_smtp_connect();
++        if (!$this->_smtp_connect()) {
++            return FALSE;
++        }
++
++        if ($this->starttls) {
++            if (! $this->_send_command('starttls')) {
++                $this->_set_error_message('email_starttls_failed');
++                return FALSE;
++            }
++            stream_socket_enable_crypto($this->_smtp_connect, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
++            // Re-issue hello to get updated service list (RFC 3207 section 4.2)
++            $this->_send_command('hello');
++        }
++
+         $this->_smtp_authenticate();
+ 
+         $this->_send_command('from', $this->clean_email($this->_headers['From']));
+@@ -1708,6 +1722,12 @@
+ 
+                         $resp = 221;
+             break;
++            case 'starttls'    :
++
++                        $this->_send_data('STARTTLS');
++
++                        $resp = 220;
++            break;
+         }
+ 
+         $reply = $this->_get_smtp_data(); 

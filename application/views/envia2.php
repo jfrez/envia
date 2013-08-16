@@ -431,7 +431,7 @@
 							<tr>
 								<td width="100%" style="font-size: 18px; color: #353535; text-align: center; font-weight: normal; font-family: Helvetica, Arial, sans-serif; line-height: 24px;">
 									<a href="#"  style="text-decoration: none; color: #353535;">
-										Estimado(a) <?=$data['name']?>, seleccione su  <span style="color: #0cbb98;">área profesional</span> y a cuántos <span style="color: #0cbb98;">profesionales de reclutamiento</span> desea enviar su  <span style="color: #0cbb98;">currículum</span>
+										Estimado(a)  seleccione  a cuántos <span style="color: #0cbb98;">profesionales de reclutamiento</span> desea enviar su  <span style="color: #0cbb98;">currículum</span>
 									</a>
 								</td>
 							</tr>
@@ -468,21 +468,26 @@
 										<tr><td width="100%" height="10"></td></tr>
 										<tr>
 											<td width="100%" style="font-size: 12px; color: #565656; text-align: left; font-weight: normal; font-family: Helvetica, Arial, sans-serif; line-height: 20px;">	
-											<form id="form" action="?/welcome/envia2" method="post" enctype="multipart/form-data">
+											<form id="form" action="?/welcome/pagar" method="post" enctype="multipart/form-data">
 											<fieldset>									
-											<label for="cat">Seleccione un rubro de empleo</label><br />
-											<select id="cat" name="cat" class="form-control">
-<? 
+										<br />
+											<label for="nombre">¿A cuantos profesionales de reclutamiento desea enviar su currículum?</label><br />
+											<p>
+                                                                                        <?
 foreach($cat as $c){
  ?>
-	<option value="<?=$c['id']?>"><?=$c['cat']?>(<?=$c['c']?>)</option>
-<?
-}
+ <label>
+<? 
+for($i =1;$i<=$c['c'];$i++){
 ?>
-											</select>
-											
-											<br />
-											<p>
+       <input type="radio" name="Profesionales" value="<?=$i?>" />
+         <?=$i?> ($US <?=$i?>)</label>
+     <br />
+
+<?
+}}
+?>
+
 										</p>	
 											</fieldset>
 											</form>
